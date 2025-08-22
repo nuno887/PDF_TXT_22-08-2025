@@ -1,0 +1,6 @@
+pip install pymupdf numpy scikit-learn
+# For OCR fallback:
+pip install ocrmypdf
+# And install Tesseract with Portuguese data:
+#   Ubuntu/Debian: sudo apt-get install tesseract-ocr tesseract-ocr-por
+#   macOS (brew):  brew install tesseract && brew install tesseract-lang

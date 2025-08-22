@@ -1,0 +1,14 @@
+# Single file
+python pdf_single_column_refactored.py "/path/to/in.pdf" -o "/path/to/out"
+
+# Whole folder (recursive)
+python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out"
+
+# Keep headers/footers (disable removal)
+python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --keep-headers
+
+# Disable OCR fallback (if you know all are digital)
+python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --no-ocr
+
+# Insert newline after semicolons
+python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --newline-after-semicolon
