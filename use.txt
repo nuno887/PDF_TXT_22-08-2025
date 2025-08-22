@@ -1,17 +1,11 @@
-# Single file
-python pdf_single_column_refactored.py "/path/to/in.pdf" -o "/path/to/out"
+# basic: process PDFs in a folder into another folder
+python pdf_dir_to_txt.py "C:\path\to\pdfs" "C:\path\to\txt_out"
 
-# Whole folder (recursive)
-python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out"
+# recurse into subfolders too
+python pdf_dir_to_txt.py "C:\path\to\pdfs" "C:\path\to\txt_out" --recurse
 
-# Keep headers/footers (disable removal)
-python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --keep-headers
+# overwrite any existing .txt
+python pdf_dir_to_txt.py "C:\path\to\pdfs" "C:\path\to\txt_out" --overwrite
 
-# Disable OCR fallback (if you know all are digital)
-python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --no-ocr
-
-# Insert newline after semicolons
-python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --newline-after-semicolon
-
-# Skip the last page in all processed PDFs
-python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --drop-last-page
+# tweak the column split & threshold (if needed)
+python pdf_dir_to_txt.py "C:\Users\nuno.ms.goncalves\Desktop\SQLite_Creation\JORAM" "C:\Users\nuno.ms.goncalves\Desktop\SQLite_Creation\JORAM_TXT" --column-split 0.45 --threshold 0.70
