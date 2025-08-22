@@ -12,3 +12,6 @@ python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --no-
 
 # Insert newline after semicolons
 python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --newline-after-semicolon
+
+# Skip the last page in all processed PDFs
+python pdf_single_column_refactored.py "/path/to/folder" -o "/path/to/out" --drop-last-page
