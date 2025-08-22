@@ -253,6 +253,7 @@ def remove_headers_footers_agnostic(pages_text,
 
 # ============================== Pipeline ==============================
 
+# 1) In pdf_to_single_column_text signature, add:
 def pdf_to_single_column_text(pdf_path: Path,
                               use_ocr: bool = True,
                               ocr_lang: str = "por+eng",
@@ -262,10 +263,16 @@ def pdf_to_single_column_text(pdf_path: Path,
                               bottom_lines: int = 4,
                               min_share: float = 0.30,
                               sim_thresh: float = 0.90,
-                              newline_after_semicolon: bool = False) -> str:
+                              newline_after_semicolon: bool = False,
+                              drop_last_page: bool = False) -> str:   # <—
     if use_ocr:
         pdf_path = ensure_text_layer(pdf_path, lang=ocr_lang, jobs=ocr_jobs)
     pages = load_pages_with_words(pdf_path)
+
+    # NEW: drop the final page if requested
+    if drop_last_page and len(pages) >= 1:
+        pages = pages[:-1]
+
     pages_text = [rebuild_page_text(words, newline_after_semicolon) for words in pages]
     if remove_headers and len(pages_text) >= 2:
         pages_text = remove_headers_footers_agnostic(
@@ -277,6 +284,7 @@ def pdf_to_single_column_text(pdf_path: Path,
         )
     full = "\n\n".join(pages_text).strip() + "\n"
     return full
+
 
 
 def process_path(input_path: Path,
@@ -322,6 +330,8 @@ def main():
     ap.add_argument("--newline-after-semicolon", action="store_true",
                     help="Insert a newline AFTER each ';' (semicolon kept).")
     ap.add_argument("--overwrite", action="store_true", help="Overwrite existing .txt files")
+    ap.add_argument("--drop-last-page", action="store_true",
+                help="Skip the last page of every PDF (useful if it’s always boilerplate).")
     args = ap.parse_args()
 
     input_path = Path(args.input)
@@ -336,7 +346,8 @@ def main():
         bottom_lines=args.bottom_lines,
         min_share=args.min_share,
         sim_thresh=args.sim_thresh,
-        newline_after_semicolon=args.newline_after_semicolon
+        newline_after_semicolon=args.newline_after_semicolon,
+        drop_last_page=args.drop_last_page,
     )
 
     if input_path.exists():
